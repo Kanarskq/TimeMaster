@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>TimeMaster</title>
+</head>
+<body>
+<div><br>
+    <h4>Registration</h4><br>
+    <div>
+        <form action="/registration" method="post" name="registration">
+            <label for="name">Name</label>
+            <input name="name" type="text"><br><br>
+            <label for="email">Email</label>
+            <input name="email" type="email"><br><br>
+            <label for="password">Password</label>
+            <input name="password" type="password"><br><br>
+            <input name="_csrf" type="hidden" value="${_csrf.token}">
+            <input type="submit" value="Register">
+            <a href="/login">Login</a>
+        </form>
+    </div>
+</div>
+<br><br>
+</body>
+</html>

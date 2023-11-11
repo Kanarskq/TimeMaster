@@ -1,4 +1,4 @@
-package com.example.TimeMaster.Controllers;
+package com.example.TimeMaster.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
 
     @GetMapping("/")
-    public String home(){
+    public String home() {
         return "home";
     }
 }
