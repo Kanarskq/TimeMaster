@@ -16,7 +16,7 @@
     <a th:href="@{/usersTasks/add}">+</a>
 
     <ul>
-        <li th:each="e : ${tasks}" th:text="${e.taskName + ': Due on ' + e.dueDate}"></li>
+        <li th:each="e : ${tasks}"><a th:href="@{'/usersTasks/task/'+${e.id}}" th:text="${e.taskName + ': Due on ' + e.dueDate} "></a>></li>
     </ul>
 </body>
 </html>

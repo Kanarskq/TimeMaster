@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Details</title>
+</head>
+<body>
+<h1>Task Details</h1>
+
+<div th:if="${task != null}">
+
+  <p><strong>Task Name:</strong> <span th:text="${task.taskName}"></span></p>
+  <p><strong>Description:</strong> <span th:text="${task.description}"></span></p>
+  <p><strong>Due Date:</strong> <span th:text="${task.dueDate}"></span></p>
+  <p><strong>User:</strong> <span th:text="${task.user.username}"></span></p>
+
+
+</div>
+<div th:if="${task == null}">
+  <p>Task not found.</p>
+</div>
+
+<!-- Add navigation link to go back to the task list -->
+<a th:href="@{/usersTasks}">Back to Task List</a>
+
+</body>
+</html>
