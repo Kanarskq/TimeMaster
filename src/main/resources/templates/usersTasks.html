@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Tasks</title>
+</head>
+<body>
+    <h1>Today</h1>
+    <h2>Your Tasks</h2>
+    <a th:href="@{/usersTasks/add}">+</a>
+
+    <ul>
+        <li th:each="e : ${tasks}" th:text="${e.taskName + ': Due on ' + e.dueDate}"></li>
+    </ul>
+</body>
+</html>
