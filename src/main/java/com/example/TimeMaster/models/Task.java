@@ -27,8 +27,8 @@ public class Task {
     @Column(name = "dueDate")
     private LocalDate dueDate;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
     @JoinColumn(name = "user", referencedColumnName = "id")
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     private User user;
 
     public Long getId() {

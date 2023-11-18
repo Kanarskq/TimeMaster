@@ -15,12 +15,16 @@
   <p><strong>User:</strong> <span th:text="${task.user.username}"></span></p>
 
   <a th:href="@{/usersTasks/task/{id}/edit(id=${task.id})}"> Edit </a>
+
+  <form method="post" th:action="@{/usersTasks/task/{id}/delete(id=${task.id})}">
+    <button type="submit">Delete Task</button>
+  </form>
+
 </div>
 <div th:if="${task == null}">
   <p>Task not found.</p>
 </div>
 
-<!-- Add navigation link to go back to the task list -->
 <a th:href="@{/usersTasks}">Back to Task List</a>
 
 </body>
