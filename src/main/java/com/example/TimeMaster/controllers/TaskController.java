@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class TaskController {
@@ -19,9 +20,18 @@ public class TaskController {
     private TaskRepository taskRepository;
 
     @GetMapping("/usersTasks")
-    public String usersTasks(Model model){
-        LocalDate today = LocalDate.now();
-        model.addAttribute("tasks", taskRepository.findByDueDate(today));
+    public String usersTasks(@RequestParam(required = false) String selectedDate, Model model){
+        LocalDate selectedLocalDate;
+
+        if (selectedDate != null && !selectedDate.isEmpty()) {
+            selectedLocalDate = LocalDate.parse(selectedDate);
+        } else {
+            selectedLocalDate = LocalDate.now();
+        }
+
+        List<Task> tasks = taskRepository.findByDueDate(selectedLocalDate);
+        model.addAttribute("tasks", tasks);
+        model.addAttribute("selectedDate", selectedLocalDate);
         return "usersTasks";
     }
 
