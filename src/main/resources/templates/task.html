@@ -14,7 +14,7 @@
   <p><strong>Due Date:</strong> <span th:text="${task.dueDate}"></span></p>
   <p><strong>User:</strong> <span th:text="${task.user.username}"></span></p>
 
-
+  <a th:href="@{/usersTasks/task/{id}/edit(id=${task.id})}"> Edit </a>
 </div>
 <div th:if="${task == null}">
   <p>Task not found.</p>
