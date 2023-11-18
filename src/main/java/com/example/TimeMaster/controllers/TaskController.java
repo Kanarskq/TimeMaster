@@ -82,4 +82,10 @@ public class TaskController {
         return "redirect:/usersTasks/task/{id}";
     }
 
+    @PostMapping("/usersTasks/task/{id}/delete")
+    public String deleteTaskSubmit(@PathVariable("id") Long id, @ModelAttribute Task updatedTask) {
+        taskRepository.deleteById(id);
+        return "redirect:/usersTasks";
+    }
+
 }
