@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Adding a new task</title>
+</head>
+<body>
+<form method="post" th:action="@{/usersTasks/add}">
+    <div>
+        <label for="taskName">Task Name:</label>
+        <input type="text" id="taskName" name="taskName" required placeholder="Name of a task">
+    </div>
+    <div>
+        <label for="dueDate">Due Date:</label>
+        <input type="date" id="dueDate" name="dueDate" required>
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" required></textarea>
+    </div>
+    <input name="user" th:value="${#authentication.principal.id}" type="hidden"/>
+    <br>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>
