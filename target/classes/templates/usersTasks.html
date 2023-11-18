@@ -5,12 +5,18 @@
     <title>Your Tasks</title>
 </head>
 <body>
-    <h1>Today</h1>
+    <h1 th:text="${selectedDate}"></h1>
     <h2>Your Tasks</h2>
+
+    <form method="get" th:action="@{/usersTasks}">
+        <label for="selectedDate">Select Date:</label>
+        <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required>
+        <button type="submit">Show Tasks</button>
+    </form>
     <a th:href="@{/usersTasks/add}">+</a>
 
     <ul>
-        <li th:each="e : ${tasks}" th:text="${e.taskName + ': Due on ' + e.dueDate}"></li>
+        <li th:each="e : ${tasks}"><a th:href="@{'/usersTasks/task/'+${e.id}}" th:text="${e.taskName + ': Due on ' + e.dueDate} "></a>></li>
     </ul>
 </body>
 </html>
