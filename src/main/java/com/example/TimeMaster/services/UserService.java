@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -28,12 +29,36 @@ public class UserService {
         return true;
     }
 
+    public boolean updateUserRole(Long id, String newRole) {
+        Optional<User> optionalUser = userRepository.findById(id);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+
+            // Оновлюємо роль користувача
+            user.getRole().clear();
+            user.getRole().add(Role.valueOf(newRole));
+
+            // Зберігаємо зміни
+            userRepository.save(user);
+
+            log.info("User role updated: {} - new role: {}", user.getEmail(), newRole);
+            return true;
+        } else {
+            log.warn("User not found with id: {}", id);
+            return false;
+        }
+    }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 
-    public void getUserById(Long id) {
+    public void findUserById(Long id) {
         userRepository.findById(id).orElse(null);
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 }

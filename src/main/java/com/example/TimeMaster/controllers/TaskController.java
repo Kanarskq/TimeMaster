@@ -3,6 +3,7 @@ package com.example.TimeMaster.controllers;
 import com.example.TimeMaster.models.Task;
 import com.example.TimeMaster.models.User;
 import com.example.TimeMaster.repositories.TaskRepository;
+import com.example.TimeMaster.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,18 +17,20 @@ public class TaskController {
 
     @Autowired
     private TaskRepository taskRepository;
+    private UserRepository userRepository;
 
-    @GetMapping("/usersTasks")
-    public String usersTasks(@RequestParam(required = false) String selectedDate, Model model){
+    @GetMapping("/usersTasks/{user}")
+    public String usersTasks(@PathVariable("user") User user, @RequestParam(required = false) String selectedDate, Model model){
         LocalDate selectedLocalDate;
 
-        if (selectedDate != null && !selectedDate.isEmpty()) {
+        if (selectedDate != null && !selectedDate.isEmpty() ) {
             selectedLocalDate = LocalDate.parse(selectedDate);
         } else {
             selectedLocalDate = LocalDate.now();
         }
 
-        List<Task> tasks = taskRepository.findByDueDate(selectedLocalDate);
+        List<Task> tasks = taskRepository.findByUserAndDueDate(user, selectedLocalDate);
+        model.addAttribute("user", user);
         model.addAttribute("tasks", tasks);
         model.addAttribute("selectedDate", selectedLocalDate);
         return "usersTasks";
@@ -83,7 +86,7 @@ public class TaskController {
     }
 
     @PostMapping("/usersTasks/task/{id}/delete")
-    public String deleteTaskSubmit(@PathVariable("id") Long id, @ModelAttribute Task updatedTask) {
+    public String deleteTaskSubmit(@PathVariable("id") Long id) {
         taskRepository.deleteById(id);
         return "redirect:/usersTasks";
     }
