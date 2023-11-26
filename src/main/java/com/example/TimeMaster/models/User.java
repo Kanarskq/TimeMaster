@@ -46,6 +46,11 @@ public class User implements UserDetails {
     @Column(name = "dataOfCreation")
     private LocalDateTime dateOfCreation;
 
+    public void setRole(String newRole) {
+        this.role.add(Role.valueOf(newRole));
+    }
+
+
     @PrePersist
     private void init(){
         dateOfCreation = LocalDateTime.now();

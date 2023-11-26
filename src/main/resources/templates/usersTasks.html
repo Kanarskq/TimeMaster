@@ -8,7 +8,7 @@
     <h1 th:text="${selectedDate}"></h1>
     <h2>Your Tasks</h2>
 
-    <form method="get" th:action="@{/usersTasks}">
+    <form method="get" th:action="@{/usersTasks/{userId}(userId=${user.id})}">
         <label for="selectedDate">Select Date:</label>
         <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required>
         <button type="submit">Show Tasks</button>

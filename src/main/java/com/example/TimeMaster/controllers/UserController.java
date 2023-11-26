@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -27,8 +28,14 @@ public class UserController {
     public String saveUser(User user, Model model) {
         if (userService.saveUser(user)) {
             model.addAttribute("ErrorMessage", "Email is already exits");
-            return "registration";
+            return "redirect:/login";
         }
         return "redirect:/login";
+    }
+
+    @GetMapping("/profile/{id}")
+    public String profile(@PathVariable("id") User user, Model model) {
+        model.addAttribute("user", user);
+        return "profile";
     }
 }
