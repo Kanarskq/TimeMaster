@@ -7,24 +7,26 @@
   <meta charset="UTF-8">
   <title>User Profile</title>
 </head>
-<body>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>User Profile</h1>
+<div class="container my-4">
+  <h1 class="display-4">User Profile</h1>
 
-<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-  <a th:href="@{/admin}">Admin Panel</a>
-</div>
+  <div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
+    <a href="/admin" class="btn btn-primary">Admin Panel</a>
+  </div>
 
+  <div th:if="${user != null}" class="mt-4">
+    <p class="lead" th:text="'Name: ' + ${user.name}"></p>
+    <p class="lead" th:text="'Email: ' + ${user.email}"></p>
+    <p class="lead" th:text="'Date of creation: ' + ${user.dateOfCreation}"></p>
+    <a th:href="@{/usersTasks/{userId}(userId=${user.id})}" class="btn btn-success">My Tasks</a>
+    <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+  </div>
 
-<div th:if="${user != null}">
-  <p th:text="'Name: ' + ${user.name}"></p>
-  <p th:text="'Email: ' + ${user.email}"></p>
-  <p th:text="'Date of creation: ' + ${user.dateOfCreation}"></p>
-  <a th:href="@{/usersTasks/{userId}(userId=${user.id})}">MyTasks</a>
-</div>
-
-<div th:if="${user == null}">
-  <p>User not found</p>
+  <div th:if="${user == null}" class="mt-4">
+    <p class="lead">User not found</p>
+  </div>
 </div>
 
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>

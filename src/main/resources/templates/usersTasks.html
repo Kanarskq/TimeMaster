@@ -7,21 +7,30 @@
     <meta charset="UTF-8">
     <title>Your Tasks</title>
 </head>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<body>
-    <h1 th:text="${selectedDate}"></h1>
-    <h2>Your Tasks</h2>
 
-    <form method="get" th:action="@{/usersTasks/{userId}(userId=${user.id})}">
-        <label for="selectedDate">Select Date:</label>
-        <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required>
-        <button type="submit">Show Tasks</button>
+<div class="container my-4">
+    <h1 class="display-4" th:text="${selectedDate}"></h1>
+    <h2 class="mb-4">Your Tasks</h2>
+
+    <form method="get" th:action="@{/usersTasks/{userId}(userId=${user.id})}" class="mb-4">
+        <label for="selectedDate" class="form-label">Select Date:</label>
+        <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required class="form-control">
+        <button type="submit" class="btn btn-primary">Show Tasks</button>
     </form>
-    <a th:href="@{/usersTasks/add}">+</a>
 
-    <ul>
-        <li th:each="e : ${tasks}"><a th:href="@{'/usersTasks/task/'+${e.id}}" th:text="${e.taskName + ': Due on ' + e.dueDate} "></a>></li>
+    <a th:href="@{/usersTasks/add}" class="btn btn-success mb-4">+</a>
+
+    <ul class="list-group">
+        <li th:each="e : ${tasks}" class="list-group-item">
+            <a class="d-block text-dark text-decoration-none" th:href="@{'/usersTasks/task/'+${e.id}}">
+                <span th:text="${e.taskName + ': Due on ' + e.dueDate}"></span>
+            </a>
+        </li>
     </ul>
-    <footer class="container" th:insert="~{shared/footer :: footer}"></footer>
+</div>
+
+<footer class="container mt-5" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>

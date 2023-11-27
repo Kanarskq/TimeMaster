@@ -7,13 +7,16 @@
   <meta charset="UTF-8">
   <title>User Tasks</title>
 </head>
-<body>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>User Tasks</h1>
 
-<div th:if="${limitExceeded}">
-  <p style="color: red;">You have reached the maximum limit of tasks.</p>
-  <a th:href="@{/profile/{userId}(userId=${user.id})}"><button>Return to my profile</button></a>
+<div class="container my-4">
+  <h1 class="display-4">User Tasks</h1>
+
+  <div th:if="${limitExceeded}" class="mt-4">
+    <p class="text-danger">You have reached the maximum limit of tasks.</p>
+    <a th:href="@{/profile/{userId}(userId=${user.id})" class="btn btn-primary">Return to my profile</a>
+  </div>
 </div>
 
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>

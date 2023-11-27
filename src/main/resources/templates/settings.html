@@ -7,16 +7,20 @@
     <meta charset="UTF-8">
     <title>Admin Settings</title>
 </head>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<body>
 
-<h2>Task Limit Settings</h2>
+<div class="container my-4">
+    <h2 class="display-4">Task Limit Settings</h2>
 
-<form action="/admin/settings/setTaskLimit" method="post">
-    <label for="taskLimit">Set Task Limit:</label>
-    <input type="number" id="taskLimit" name="taskLimit" required>
-    <button type="submit">Set Limit</button>
-</form>
-<footer class="container" th:insert="~{shared/footer :: footer}"></footer>
+    <form action="/admin/settings/setTaskLimit" method="post" class="mb-3">
+        <div class="mb-3">
+            <label for="taskLimit" class="form-label">Set Task Limit:</label>
+            <input type="number" id="taskLimit" name="taskLimit" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Set Limit</button>
+    </form>
+</div>
+<footer class="container mt-5" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>

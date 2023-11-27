@@ -7,28 +7,32 @@
   <meta charset="UTF-8">
   <title>Edit Task</title>
 </head>
-<body>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>Edit Task</h1>
 
-<form method="post" th:action="@{/usersTasks/task/{id}/edit(id=${task.id})}">
-  <div>
-    <label for="taskName">Task Name:</label>
-    <input type="text" id="taskName" name="taskName" th:value="${task.taskName}" required>
-  </div>
-  <div>
-    <label for="description">Description:</label>
-    <textarea id="description" name="description" th:text="${task.description}" required></textarea>
-  </div>
-  <div>
-    <label for="dueDate">Due Date:</label>
-    <input type="date" id="dueDate" name="dueDate" th:value="${task.dueDate}" required>
-  </div>
+<div class="container my-5">
+  <h1 class="display-4 text-center">Edit Task</h1>
 
-  <button type="submit">Update Task</button>
-</form>
+  <form method="post" th:action="@{/usersTasks/task/{id}/edit(id=${task.id})}" class="my-4">
+    <div class="mb-3">
+      <label for="taskName" class="form-label">Task Name:</label>
+      <input type="text" id="taskName" name="taskName" th:value="${task.taskName}" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="description" class="form-label">Description:</label>
+      <textarea id="description" name="description" th:text="${task.description}" class="form-control"
+                required></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="dueDate" class="form-label">Due Date:</label>
+      <input type="date" id="dueDate" name="dueDate" th:value="${task.dueDate}" class="form-control" required>
+    </div>
 
-<a th:href="@{/usersTasks/task/{id}(id=${task.id})}">Back to Task Details</a>
+    <button type="submit" class="btn btn-primary">Update Task</button>
+  </form>
+
+  <a th:href="@{/usersTasks/task/{id}(id=${task.id})}" class="btn btn-secondary">Back to Task Details</a>
+</div>
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>

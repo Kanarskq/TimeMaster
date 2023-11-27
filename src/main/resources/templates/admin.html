@@ -6,55 +6,34 @@
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta charset="UTF-8">
   <title>Адмін-панель</title>
-  <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-around;
-            background-color: #eee;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        section {
-            margin-top: 20px;
-        }
-
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
 </head>
-<body>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>Адмін-панель</h1>
-<nav>
-  <a href="/admin/listOfUsers">Користувачі</a>
-  <a href="/admin/settings">Налаштування</a>
-  <a href="#">Вихід</a>
-</nav>
+<div class="container my-4">
+  <h1 class="display-4 text-center">Адмін-панель</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <div class="navbar-collapse">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/listOfUsers">Користувачі</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/admin/settings">Налаштування</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/profile/{userId}(userId=${user.id})}">Вихід</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-<section>
-  <h2>Ласкаво просимо в адмін-панель!</h2>
-  <p>Тут ви можете керувати вашими ресурсами.</p>
-</section>
+  <section class="my-4">
+    <h2 class="display-5">Ласкаво просимо в адмін-панель!</h2>
+    <p>Тут ви можете керувати вашими ресурсами.</p>
+  </section>
+</div>
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>
