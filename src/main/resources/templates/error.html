@@ -5,28 +5,12 @@
         integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" rel="stylesheet">
   <meta content="width=device-width, initial-scale=1" name="viewport">
   <meta charset="UTF-8">
-  <title>User Profile</title>
+  <title>Error</title>
 </head>
 <body>
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>User Profile</h1>
-
-<div th:if="${#authorization.expression('hasRole(''ROLE_ADMIN'')')}">
-  <a th:href="@{/admin}">Admin Panel</a>
-</div>
-
-
-<div th:if="${user != null}">
-  <p th:text="'Name: ' + ${user.name}"></p>
-  <p th:text="'Email: ' + ${user.email}"></p>
-  <p th:text="'Date of creation: ' + ${user.dateOfCreation}"></p>
-  <a th:href="@{/usersTasks/{userId}(userId=${user.id})}">MyTasks</a>
-</div>
-
-<div th:if="${user == null}">
-  <p>User not found</p>
-</div>
-
+<h1>Error</h1>
+<p th:text="${error}"></p>
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>

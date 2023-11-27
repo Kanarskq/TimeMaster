@@ -1,0 +1,32 @@
+<div th:fragment="header">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+      <a class="navbar-brand">Time Master</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+              aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+          <li class="nav-item">
+            <a class="nav-link text-dark" href="/">Home</a>
+          </li>
+          <li class="nav-item" th:if="${user != null}">
+            <a class="nav-link text-dark" th:href="@{/profile/{userId}(userId=${user.id})}">Profile</a>
+          </li>
+          <li class="nav-item" th:if="${user != null}">
+            <a class="nav-link text-dark" th:href="@{/usersTasks/{userId}(userId=${user.id})}">My Tasks</a>
+          </li>
+        </ul>
+        <ul class="nav nav-pills text-end">
+          <li class="nav-item me-2" th:if="${user == null}">
+            <a class="nav-link link-warning" href="/login">Login</a>
+          </li>
+          <li class="nav-item" th:if="${user == null}">
+            <a aria-current="page" class="nav-link bg-warning link-dark" href="/registration">Sign-up</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

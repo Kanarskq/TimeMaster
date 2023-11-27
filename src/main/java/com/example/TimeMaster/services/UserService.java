@@ -35,11 +35,9 @@ public class UserService {
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
 
-            // Оновлюємо роль користувача
             user.getRole().clear();
             user.getRole().add(Role.valueOf(newRole));
 
-            // Зберігаємо зміни
             userRepository.save(user);
 
             log.info("User role updated: {} - new role: {}", user.getEmail(), newRole);
@@ -49,6 +47,21 @@ public class UserService {
             return false;
         }
     }
+
+    public boolean updateTaskLimit(Integer taskLimit) {
+        List<User> users = userRepository.findAll();
+
+        for (User user : users) {
+            user.setTaskLimit(taskLimit);
+            userRepository.save(user);
+
+            log.info("Task limit updated for user: {} - new limit: {}", user.getEmail(), taskLimit);
+        }
+
+        return true;
+    }
+
+
 
     public void deleteUser(Long id) {
         userRepository.deleteById(id);

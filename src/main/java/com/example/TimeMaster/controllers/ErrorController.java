@@ -5,22 +5,23 @@ import com.example.TimeMaster.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
-public class HomeController {
+public class ErrorController {
     private final UserRepository userRepository;
-    @GetMapping("/")
-    public String home(Model model, Principal principal) {
+
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception e, Model model, Principal principal) {
         if (principal != null) {
             String username = principal.getName();
             User user = userRepository.findByEmail(username);
             model.addAttribute("user", user);
         }
-
-        return "home";
+        model.addAttribute("error", e.getMessage());
+        return "error";
     }
 }

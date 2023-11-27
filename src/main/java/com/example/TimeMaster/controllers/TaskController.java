@@ -4,26 +4,27 @@ import com.example.TimeMaster.models.Task;
 import com.example.TimeMaster.models.User;
 import com.example.TimeMaster.repositories.TaskRepository;
 import com.example.TimeMaster.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class TaskController {
 
-    @Autowired
-    private TaskRepository taskRepository;
-    private UserRepository userRepository;
+    private final TaskRepository taskRepository;
+    private final UserRepository userRepository;
 
     @GetMapping("/usersTasks/{user}")
-    public String usersTasks(@PathVariable("user") User user, @RequestParam(required = false) String selectedDate, Model model){
+    public String usersTasks(@PathVariable("user") User user, String selectedDate, Model model) {
         LocalDate selectedLocalDate;
 
-        if (selectedDate != null && !selectedDate.isEmpty() ) {
+        if (selectedDate != null && !selectedDate.isEmpty()) {
             selectedLocalDate = LocalDate.parse(selectedDate);
         } else {
             selectedLocalDate = LocalDate.now();
@@ -37,34 +38,60 @@ public class TaskController {
     }
 
     @GetMapping("/usersTasks/add")
-    public String addTask(){
+    public String addTask(Model model, Principal principal) {
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userRepository.findByEmail(username);
+            model.addAttribute("user", user);
+        }
         return "addTask";
     }
 
     @PostMapping("/usersTasks/add")
-    public String addTaskPost(@RequestParam String taskName, @RequestParam LocalDate dueDate, @RequestParam String description, @RequestParam User user, Model model){
+    public String addTaskPost(@RequestParam String taskName, @RequestParam LocalDate dueDate, @RequestParam String description, @RequestParam User user, Model model) {
         Task task = new Task(taskName, description, dueDate, user);
+        Long userId = user.getId();
+        if (taskRepository.findByUser(user).size() >= user.getTaskLimit()) {
+            return "redirect:/tasks?limitExceeded=true&user=" + userId;
+        }
         taskRepository.save(task);
-        return "redirect:/usersTasks";
+        return "redirect:/usersTasks/{user}";
     }
 
+    @GetMapping("/tasks")
+    public String getUsersTasks(@RequestParam(name = "limitExceeded") boolean limitExceeded, @RequestParam(name = "user") User user, Model model) {
+        model.addAttribute("limitExceeded", limitExceeded);
+        model.addAttribute("user", user);
+        return "limitExceeded";
+    }
+
+
     @GetMapping("/usersTasks/task/{id}")
-    public String additionalTaskInfo(@PathVariable("id") Long id, Model model){
+    public String additionalTaskInfo(@PathVariable("id") Long id, Model model, Principal principal) {
         Task task = taskRepository.findById(id).orElse(null);
         model.addAttribute("task", task);
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userRepository.findByEmail(username);
+            model.addAttribute("user", user);
+        }
         return "task";
     }
 
     @GetMapping("/usersTasks/task/{id}/edit")
-    public String editTaskForm(@PathVariable("id") Long id, Model model) {
+    public String editTaskForm(@PathVariable("id") Long id, Model model, Principal principal) {
         Task task = taskRepository.findById(id).orElse(null);
+        if (principal != null) {
+            String username = principal.getName();
+            User user = userRepository.findByEmail(username);
+            model.addAttribute("user", user);
+        }
 
         if (task != null) {
             model.addAttribute("task", task);
             return "editTask";
         } else {
-            // Handle the case where the task is not found
-            return "redirect:/usersTasks"; // Redirect to the task list
+            return "redirect:/usersTasks/task/{id}";
         }
     }
 
@@ -73,11 +100,9 @@ public class TaskController {
         Task existingTask = taskRepository.findById(id).orElse(null);
 
         if (existingTask != null) {
-            // Update the existing task with new details
             existingTask.setTaskName(updatedTask.getTaskName());
             existingTask.setDescription(updatedTask.getDescription());
             existingTask.setDueDate(updatedTask.getDueDate());
-            // Update other fields as needed
 
             taskRepository.save(existingTask);
         }
@@ -86,9 +111,14 @@ public class TaskController {
     }
 
     @PostMapping("/usersTasks/task/{id}/delete")
-    public String deleteTaskSubmit(@PathVariable("id") Long id) {
+    public String deleteTaskSubmit(@PathVariable("id") Long id, Model model, Principal principal) {
         taskRepository.deleteById(id);
-        return "redirect:/usersTasks";
+        String username = principal.getName();
+        User user = userRepository.findByEmail(username);
+        Long userId = user.getId();
+        model.addAttribute("user", user);
+        model.addAttribute("userId", userId);
+        return "redirect:/usersTasks/" + userId;
     }
 
 }
