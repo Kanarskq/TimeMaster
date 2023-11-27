@@ -48,14 +48,15 @@ public class TaskController {
     }
 
     @PostMapping("/usersTasks/add")
-    public String addTaskPost(@RequestParam String taskName, @RequestParam LocalDate dueDate, @RequestParam String description, @ModelAttribute User user, Model model) {
+    public String addTaskPost(@RequestParam String taskName, @RequestParam LocalDate dueDate, @RequestParam String description, User user, Model model) {
         Task task = new Task(taskName, description, dueDate, user);
         Long userId = user.getId();
+        model.addAttribute("user", user);
         if (taskRepository.findByUser(user).size() >= user.getTaskLimit()) {
-            return "redirect:/tasks?limitExceeded=true&user=" + userId;
+            return "redirect:/tasks?limitExceeded=true&userId=" + userId;
         }
         taskRepository.save(task);
-        return "redirect:/usersTasks/{user}";
+        return "redirect:/usersTasks/" + userId;
     }
 
     @GetMapping("/tasks")

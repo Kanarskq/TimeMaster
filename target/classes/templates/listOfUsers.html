@@ -7,49 +7,51 @@
     <meta charset="UTF-8">
     <title>List of Users</title>
 </head>
-<body>
+<body class="bg-light">
 <header class="p-3 bg-dark text-white" th:insert="~{shared/header :: header}"></header>
-<h1>List of Users</h1>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Email</th>
-        <th>Date Of Creation</th>
-        <th>Delete the user</th>
-        <th>Role</th>
-        <th>Change Role</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.name}"></td>
-        <td th:text="${user.email}"></td>
-        <td th:text="${user.dateOfCreation}"></td>
-        <td>
-            <form method="post" th:action="@{/admin/listOfUsers/user/delete/{id}(id=${user.id})}">
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <button type="submit">Delete</button>
-            </form>
-        </td>
-        <td th:text="${#strings.substringAfter(user.role[0], 'ROLE_')}"></td>
-        <td>
-            <form method="post" th:action="@{/admin/listOfUsers/user/edit/{id}(id=${user.id})}">
-                <input type="hidden" name="_csrf" value="${_csrf.token}">
-                <select name="newRole">
-                    <option value="ROLE_USER" th:selected="${user.role.contains('ROLE_USER')}">USER</option>
-                    <option value="ROLE_ADMIN" th:selected="${user.role.contains('ROLE_ADMIN')}">ADMIN</option>
-                </select>
-                <button type="submit">Change Role</button>
-            </form>
-        </td>
+<div class="container my-4">
+    <h1 class="display-4">List of Users</h1>
 
-    </tr>
-    </tbody>
-</table>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Date Of Creation</th>
+            <th>Delete the user</th>
+            <th>Role</th>
+            <th>Change Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.dateOfCreation}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/listOfUsers/user/delete/{id}(id=${user.id})}">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            <td th:text="${#strings.substringAfter(user.role[0], 'ROLE_')}"></td>
+            <td>
+                <form method="post" th:action="@{/admin/listOfUsers/user/edit/{id}(id=${user.id})}">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}">
+                    <select name="newRole" class="form-select">
+                        <option value="ROLE_USER" th:selected="${user.role.contains('ROLE_USER')}">USER</option>
+                        <option value="ROLE_ADMIN" th:selected="${user.role.contains('ROLE_ADMIN')}">ADMIN</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Change Role</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 <footer class="container" th:insert="~{shared/footer :: footer}"></footer>
 </body>
 </html>

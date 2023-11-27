@@ -1,5 +1,5 @@
 <div th:fragment="header">
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-2">
     <div class="container-fluid">
       <a class="navbar-brand">Time Master</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -20,10 +20,10 @@
         </ul>
         <ul class="nav nav-pills text-end">
           <li class="nav-item me-2" th:if="${user == null}">
-            <a class="nav-link link-warning" href="/login">Login</a>
+            <a class="nav-link link-dark" href="/login">Login</a>
           </li>
           <li class="nav-item" th:if="${user == null}">
-            <a aria-current="page" class="nav-link bg-warning link-dark" href="/registration">Sign-up</a>
+            <a aria-current="page" class="nav-link bg-dark link-light" href="/registration">Sign-up</a>
           </li>
         </ul>
       </div>
