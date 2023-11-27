@@ -46,6 +46,9 @@ public class User implements UserDetails {
     @Column(name = "dataOfCreation")
     private LocalDateTime dateOfCreation;
 
+    @Column(name = "task_limit")
+    private Integer taskLimit = 20;
+
     public void setRole(String newRole) {
         this.role.add(Role.valueOf(newRole));
     }
