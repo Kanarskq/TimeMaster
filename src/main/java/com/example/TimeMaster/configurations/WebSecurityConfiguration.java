@@ -26,7 +26,7 @@ public class WebSecurityConfiguration {
         http
                 .authorizeHttpRequests((req) -> req
                         .requestMatchers("/profile", "/usersTasks/add").hasAnyAuthority("ROLE_ADMIN", "ROLE_USER")
-                        .requestMatchers("/",  "/registration", "/usersTasks", "/error").permitAll()
+                        .requestMatchers("/",  "/registration", "/usersTasks", "/error", "send/email").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
