@@ -7,13 +7,17 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="TimeMaster" />
+        <module name="time-master-onpu" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TimeMaster" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="TimeMaster" options="-parameters" />
+      <module name="time-master-onpu" options="-parameters" />
     </option>
   </component>
 </project>
