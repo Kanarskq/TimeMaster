@@ -28,7 +28,7 @@ public class Task {
     private LocalDate dueDate;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, optional = false)
-    @JoinColumn(name = "user", referencedColumnName = "id")
+    @JoinColumn(name = "user_entity", referencedColumnName = "id")
     private User user;
 
     public Long getId() {
