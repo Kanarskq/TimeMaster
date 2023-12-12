@@ -22,7 +22,6 @@
     <p class="lead" th:text="'Date of creation: ' + ${user.dateOfCreation}"></p>
     <a th:href="@{/usersTasks/{userId}(userId=${user.id})}" class="btn btn-success">My Tasks</a>
     <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
-    <a th:href="@{/usersTasks/add}" class="btn btn-success mb-4">+</a>
   </div>
 
   <div th:if="${user == null}" class="mt-4">
