@@ -8,9 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
@@ -18,7 +22,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/registration")
-    public String registration() {
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
         return "registration";
     }
 
@@ -28,10 +33,14 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public String saveUser(User user, Model model) {
-        if (userService.saveUser(user)) {
-            model.addAttribute("ErrorMessage", "Email is already exits");
-            return "redirect:/login";
+    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        if (!userService.saveUser(user)) {
+            model.addAttribute("ErrorMessage", "Email is already exists");
+            return "registration";
         }
         return "redirect:/login";
     }

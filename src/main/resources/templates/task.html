@@ -29,6 +29,7 @@
   <div th:if="${task == null}" class="mt-4">
     <p class="lead">Task not found.</p>
   </div>
+  <br>
   <a th:href="@{/usersTasks/{id}(id=${user.id})}" class="btn btn-secondary">Back to Task List</a>
 </div>
 
