@@ -12,16 +12,22 @@
 
 <div class="container my-4">
     <h1 class="display-4" th:text="${selectedDate}"></h1>
-    <h2 class="mb-4">Your Tasks</h2>
+    <div class="container-fluid my-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="mb-4">Your Tasks</h2>
+            <a th:href="@{/usersTasks/add}" class="btn btn-success ml-2">+</a>
+        </div>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <form method="get" th:action="@{/usersTasks/{userId}(userId=${user.id})}" class="mb-4 flex-grow-1">
+            <label for="selectedDate" class="form-label">Select Date:</label>
+            <div class="d-flex flex-grow-1">
+                <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required class="form-control">
+                <button type="submit" class="btn btn-primary ml-2 flex-grow-1" style="white-space: nowrap;">Show Tasks</button>
 
-    <form method="get" th:action="@{/usersTasks/{userId}(userId=${user.id})}" class="mb-4">
-        <label for="selectedDate" class="form-label">Select Date:</label>
-        <input type="date" id="selectedDate" name="selectedDate" th:value="${selectedDate}" required class="form-control">
-        <button type="submit" class="btn btn-primary">Show Tasks</button>
-    </form>
-
-    <a th:href="@{/usersTasks/add}" class="btn btn-success mb-4">+</a>
-
+            </div>
+        </form>
+    </div>
     <ul class="list-group">
         <li th:each="e : ${tasks}" class="list-group-item">
             <a class="d-block text-dark text-decoration-none" th:href="@{'/usersTasks/task/'+${e.id}}">

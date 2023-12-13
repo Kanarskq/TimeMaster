@@ -7,7 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
@@ -25,12 +26,16 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "name")
+    @NotBlank(message = "Name cannot be empty")
     private String name;
 
     @Column(name = "email", unique = true)
+    @NotBlank(message = "Email cannot be empty")
+    @Email(message = "Invalid email format")
     private String email;
 
     @Column(name = "password", length = 1000)
+    @NotBlank(message = "Password cannot be empty")
     private String password;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
